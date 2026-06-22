@@ -31,7 +31,7 @@ const setSession = async (req, user) => {
   await new Promise((resolve, reject) => req.session.save((error) => error ? reject(error) : resolve()));
 };
 
-const validAvatar = (value) => !value || (value.length <= 480_000 && IMAGE_DATA.test(value));
+const validAvatar = (value) => !value || (value.length <= 15 * 1024 * 1024 && IMAGE_DATA.test(value));
 
 router.get('/me', asyncRoute(async (req, res) => {
   if (!req.session?.userId) return res.status(401).json({ error: 'Not signed in.' });
@@ -62,7 +62,7 @@ router.post('/register', authLimit, asyncRoute(async (req, res) => {
   if (!USERNAME.test(username)) return res.status(400).json({ error: 'Username must use 3–24 letters, numbers, or underscores.' });
   if (displayName.length < 2 || displayName.length > 48) return res.status(400).json({ error: 'Display name must be 2–48 characters.' });
   if (password.length < 8 || password.length > 72) return res.status(400).json({ error: 'Password must be 8–72 characters.' });
-  if (!validAvatar(avatar)) return res.status(400).json({ error: 'Avatar must be a PNG, JPEG, WebP, or GIF under 350 KB.' });
+  if (!validAvatar(avatar)) return res.status(400).json({ error: 'Avatar must be a PNG, JPEG, WebP, or GIF under 10 MB.' });
 
   let user;
   try {

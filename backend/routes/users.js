@@ -23,9 +23,9 @@ router.patch('/me', asyncRoute(async (req, res) => {
   const avatar = String(req.body.avatar || '');
   if (displayName.length < 2 || displayName.length > 48) return res.status(400).json({ error: 'Display name must be 2–48 characters.' });
   if (bio.length > 120) return res.status(400).json({ error: 'Bio can contain at most 120 characters.' });
-  if (avatar && (avatar.length > 480_000 || !IMAGE_DATA.test(avatar))) {
-    return res.status(400).json({ error: 'Avatar must be a PNG, JPEG, WebP, or GIF under 350 KB.' });
-  }
+ if (avatar && (avatar.length > 15 * 1024 * 1024 || !IMAGE_DATA.test(avatar))) {
+  return res.status(400).json({ error: 'Avatar must be a PNG, JPEG, WebP, or GIF under 10 MB.' });
+}
   const user = await User.findByIdAndUpdate(req.session.userId, { displayName, bio, avatar }, { new: true, runValidators: true });
   return res.json(publicUser(user));
 }));
