@@ -14,7 +14,7 @@ export default function ProfileModal({ user, onClose, onSave }) {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
-    if (!['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(file.type) || file.size > 350 * 1024) return setError('Use a supported image under 350 KB.');
+   if (!['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(file.type) || file.size > 10 * 1024 * 1024) return setError('Use a supported image under 10 MB.');
     const reader = new FileReader();
     reader.onload = () => setAvatar(reader.result);
     reader.readAsDataURL(file);
