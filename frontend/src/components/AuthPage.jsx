@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Check, Eye, EyeOff, ImagePlus, LockKeyhole, MessageCircleMore, ShieldCheck, Sparkles, Users } from 'lucide-react';
 
-const MAX_AVATAR = 350 * 1024;
+const MAX_AVATAR = 10 * 1024 * 1024;
 
 export default function AuthPage({ onAuthenticate, error, busy }) {
   const [mode, setMode] = useState('login');
@@ -38,7 +38,7 @@ export default function AuthPage({ onAuthenticate, error, busy }) {
     event.target.value = '';
     if (!file) return;
     if (!['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(file.type) || file.size > MAX_AVATAR) {
-      setLocalError('Choose a PNG, JPEG, WebP, or GIF under 350 KB.');
+     setLocalError('Choose a PNG, JPEG, WebP, or GIF under 10 MB.');
       return;
     }
     const reader = new FileReader();
@@ -95,7 +95,7 @@ export default function AuthPage({ onAuthenticate, error, busy }) {
                 <button type="button" className="avatar-upload-preview" onClick={() => fileRef.current?.click()} aria-label="Choose profile photo">
                   {form.avatar ? <img src={form.avatar} alt="Profile preview" /> : <ImagePlus />}
                 </button>
-                <div><b>Add a profile photo</b><small>Optional · max 350 KB</small><button type="button" onClick={() => fileRef.current?.click()}>Choose image</button></div>
+                <div><b>Add a profile photo</b><small>Optional · max 10 MB</small><button type="button" onClick={() => fileRef.current?.click()}>Choose image</button></div>
                 <input ref={fileRef} type="file" accept="image/png,image/jpeg,image/webp,image/gif" onChange={uploadAvatar} hidden />
               </div>
             )}
