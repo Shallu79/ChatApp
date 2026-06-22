@@ -1,4 +1,4 @@
-# Mango Connect Pro
+# ChatAPP
 
 A customer-ready real-time messaging product with a premium responsive interface and a deployment architecture that works as one service.
 
